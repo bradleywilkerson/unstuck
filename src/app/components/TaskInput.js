@@ -9,10 +9,19 @@ export default function TaskInput({ onContinue, isLoading }) {
   const [currentInput, setCurrentInput] = useState('');
   const [prompt, setPrompt] = useState("What are you procrastinating right now?");
   const isMobile = useIsMobile();
+  console.log("init is mobile", isMobile)
   const [hint, setHint] = useState(
     isMobile ? "type your task and tap add" : "press enter to add, cmd + enter to continue"
   );
   const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    console.log("is mobile", isMobile)
+    const newHint = isMobile 
+      ? "add another task or tap continue" 
+      : "press enter to add more, cmd + enter to continue";
+    setHint(newHint);
+  }, [isMobile])
 
   const updateTextWithAnimation = async (elementId, newText) => {
     setIsAnimating(true);
@@ -40,6 +49,7 @@ export default function TaskInput({ onContinue, isLoading }) {
     setCurrentInput('');
     
     if (newEntries.length < 2) {
+      console.log(isMobile, 'from input')
       const newHint = isMobile 
         ? "add another task or tap continue" 
         : "press enter to add more, cmd + enter to continue";
