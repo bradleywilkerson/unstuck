@@ -11,7 +11,7 @@ export default function Home() {
   const handleContinue = async (taskEntries) => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/gpt', {
+      const response = await fetch(process.env.NODE_ENV === 'development' ? 'http://localhost:8000/gpt' : 'https://unstuck-two.vercel.app/gpt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
