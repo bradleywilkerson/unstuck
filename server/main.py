@@ -21,23 +21,39 @@ app = FastAPI()
 allowed_origins = [
     "http://localhost:3000",
     "http://localhost:8000",
-    "https://unstuck-bradleywilkerson.vercel.app",  # Add your Vercel domain
-    "https://unstuck-git-main-bradleywilkerson.vercel.app",  # Preview deployments
-    "https://unstuck-two.vercel.app/"  # Production domain
+    "https://unstuck-bradleywilkerson.vercel.app",
+    "https://unstuck-git-main-bradleywilkerson.vercel.app",
+    "https://unstuck-two.vercel.app",
+    "https://unstuck-4mh2.onrender.com"
 ]
 
+# Log the allowed origins for debugging
+logger.info(f"Configured allowed origins: {allowed_origins}")
+
 if os.getenv("ALLOWED_ORIGINS"):
-    # Add any additional origins from environment variable
-    allowed_origins.extend(os.getenv("ALLOWED_ORIGINS").split(","))
+    additional_origins = os.getenv("ALLOWED_ORIGINS").split(",")
+    allowed_origins.extend([origin.strip() for origin in additional_origins])
+    logger.info(f"Added additional origins from env: {additional_origins}")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
-    expose_headers=["*"],
 )
+
+# Add CORS debugging route
+@app.options("/gpt")
+async def options_gpt():
+    return JSONResponse(
+        content={"status": "ok"},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+        },
+    )
 
 class TaskEntry(BaseModel):
     taskEntries: List[str]

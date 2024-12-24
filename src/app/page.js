@@ -12,11 +12,21 @@ export default function Home() {
   const handleContinue = async (taskEntries) => {
     setIsLoading(true);
     try {
+      // First try a preflight request
+      const preflightResponse = await fetch(`${config.apiUrl}/gpt`, {
+        method: 'OPTIONS',
+        headers: {
+          'Origin': window.location.origin,
+        },
+      });
+
+      // Proceed with the actual request
       const response = await fetch(`${config.apiUrl}/gpt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'Origin': window.location.origin,
         },
         mode: 'cors',
         credentials: 'omit',
@@ -24,12 +34,15 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to process tasks');
+        console.error('Response status:', response.status);
+        console.error('Response headers:', Object.fromEntries([...response.headers]));
+        throw new Error(`Failed to process tasks: ${response.status}`);
       }
+      
       const data = await response.json();
       setEntries(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error details:', error);
       // Fallback to simple format if API fails
       const fallbackEntries = taskEntries.map(task => ({
         title: task,
