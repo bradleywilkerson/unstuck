@@ -5,12 +5,12 @@ import useIsMobile from '../hooks/useIsMobile';
 
 export default function Response({ entries, onStartOver }) {
   const [currentEntryIndex, setCurrentEntryIndex] = useState(0);
-  const [currentStep, setCurrentStep] = useState('quote'); // quote, motivation, action, complete
+  const [currentStep, setCurrentStep] = useState('quote');
   const [currentActionStep, setCurrentActionStep] = useState(0);
   const isMobile = useIsMobile();
 
   const entry = entries[currentEntryIndex];
-  const totalSteps = entries.length * (2 + (entry?.action?.length || 0)); // quote + motivation + action steps for each entry
+  const totalSteps = entries.length * (2 + (entry?.action?.length || 0));
   
   const calculateProgress = () => {
     const stepsPerEntry = 2 + (entry?.action?.length || 0); // quote + motivation + action steps
@@ -41,6 +41,8 @@ export default function Response({ entries, onStartOver }) {
   };
 
   const handleNext = () => {
+    if (currentStep === 'complete') return;
+    
     if (currentStep === 'quote') {
       setCurrentStep('motivation');
     } else if (currentStep === 'motivation') {
@@ -106,9 +108,9 @@ export default function Response({ entries, onStartOver }) {
           />
         </div>
         <div className="fade-transition response-fade text-center">
-          <h1 className="text-3xl font-light mb-6">🎉 You did it!</h1>
+          <h1 className="text-4xl font-light mb-6">🎉 You did it!</h1>
           <p className="text-xl text-gray-300 mb-8">
-            If you followed the steps, you should be done with your task{entries.length ===1 ? '' : 's'}, and you should be proud of yourself.
+            If you followed the steps, you should be done with your task{entries.length === 1 ? '' : 's'}, and you should be proud of yourself.
           </p>
           <button
             onClick={onStartOver}
@@ -142,26 +144,42 @@ export default function Response({ entries, onStartOver }) {
         </div>
       </div>
       
-      <div className="flex flex-col items-center gap-8 w-full max-w-2xl min-h-[400px] justify-center">
+      <div className="relative flex flex-col items-center gap-8 w-full max-w-2xl min-h-[400px] justify-center">
+        {/* Touch areas for mobile */}
+        {isMobile && currentStep !== 'complete' && (
+          <>
+            <div 
+              className="absolute left-0 top-0 w-[30%] h-full cursor-pointer z-10" 
+              onClick={handleBack}
+              aria-label="Previous"
+            />
+            <div 
+              className="absolute right-0 top-0 w-[30%] h-full cursor-pointer z-10" 
+              onClick={handleNext}
+              aria-label="Next"
+            />
+          </>
+        )}
+        
         {currentStep === 'quote' && (
           <div className="fade-transition response-fade text-center">
-            <blockquote className="text-2xl italic mb-4">
+            <blockquote className="text-3xl italic mb-4">
               &ldquo;{entry.quote.text}&rdquo;
             </blockquote>
-            <footer className="text-lg text-gray-400">— {entry.quote.author}</footer>
+            <footer className="text-xl text-gray-400">— {entry.quote.author}</footer>
           </div>
         )}
         
         {currentStep === 'motivation' && (
           <div className="fade-transition response-fade text-center">
-            <p className="text-xl text-gray-200">{entry.motivation}</p>
+            <p className="text-2xl text-gray-200">{entry.motivation}</p>
           </div>
         )}
         
         {currentStep === 'action' && (
           <div className="fade-transition response-fade text-center">
-            <h3 className="text-2xl font-light mb-6">{currentActionStep + 1}</h3>
-            <p className="text-xl text-gray-200">{entry.action[currentActionStep]}</p>
+            <h3 className="text-3xl font-light mb-6">Step {currentActionStep + 1}</h3>
+            <p className="text-2xl text-gray-200">{entry.action[currentActionStep]}</p>
           </div>
         )}
       </div>
