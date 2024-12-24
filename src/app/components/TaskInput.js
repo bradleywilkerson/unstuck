@@ -93,7 +93,7 @@ export default function TaskInput({ onContinue, isLoading }) {
           autoFocus
           placeholder="add task here"
           disabled={isLoading}
-          className="w-full text-xl bg-transparent border-none outline-none text-center placeholder:text-gray-800 disabled:opacity-50"
+          className="w-full text-xl bg-transparent border-none outline-none text-center placeholder:text-gray-800 focus:placeholder-transparent disabled:opacity-50"
         />
         <button
           onClick={handleAdd}
