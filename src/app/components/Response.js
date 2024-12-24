@@ -178,7 +178,7 @@ export default function Response({ entries, onStartOver }) {
         
         {currentStep === 'action' && (
           <div className="fade-transition response-fade text-center">
-            <h3 className="text-3xl font-light mb-6">Step {currentActionStep + 1}</h3>
+            <h3 className="text-3xl font-light mb-6">{currentActionStep + 1}</h3>
             <p className="text-2xl text-gray-200">{entry.action[currentActionStep]}</p>
           </div>
         )}
