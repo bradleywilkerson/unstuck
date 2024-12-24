@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import TaskInput from './components/TaskInput';
 import Response from './components/Response';
+import { config } from './config';
 
 export default function Home() {
   const [entries, setEntries] = useState(null);
@@ -11,19 +12,18 @@ export default function Home() {
   const handleContinue = async (taskEntries) => {
     setIsLoading(true);
     try {
-      const response = await fetch(process.env.NODE_ENV === 'development' ? 'http://localhost:8000/gpt' : 'https://unstuck-4mh2.onrender.com/gpt', {
+      const response = await fetch(`${config.apiUrl}/gpt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
         mode: 'cors',
-        credentials: 'include',
+        credentials: 'omit',
         body: JSON.stringify({ taskEntries }),
       });
 
       if (!response.ok) {
-        console.log(response);
         throw new Error('Failed to process tasks');
       }
       const data = await response.json();

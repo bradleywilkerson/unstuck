@@ -17,17 +17,22 @@ load_dotenv()
 
 app = FastAPI()
 
-# Configure CORS with more permissive settings for development
-origins = [
+# Configure CORS
+allowed_origins = [
     "http://localhost:3000",
     "http://localhost:8000",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:8000",
+    "https://unstuck-bradleywilkerson.vercel.app",  # Add your Vercel domain
+    "https://unstuck-git-main-bradleywilkerson.vercel.app",  # Preview deployments
+    "https://unstuck.vercel.app"  # Production domain
 ]
+
+if os.getenv("ALLOWED_ORIGINS"):
+    # Add any additional origins from environment variable
+    allowed_origins.extend(os.getenv("ALLOWED_ORIGINS").split(","))
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
