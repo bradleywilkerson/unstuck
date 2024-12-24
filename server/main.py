@@ -23,7 +23,7 @@ allowed_origins = [
     "http://localhost:8000",
     "https://unstuck-bradleywilkerson.vercel.app",  # Add your Vercel domain
     "https://unstuck-git-main-bradleywilkerson.vercel.app",  # Preview deployments
-    "https://unstuck.vercel.app"  # Production domain
+    "https://unstuck-two.vercel.app/"  # Production domain
 ]
 
 if os.getenv("ALLOWED_ORIGINS"):
