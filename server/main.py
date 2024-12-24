@@ -24,7 +24,9 @@ allowed_origins = [
     "https://unstuck-bradleywilkerson.vercel.app",
     "https://unstuck-git-main-bradleywilkerson.vercel.app",
     "https://unstuck-two.vercel.app",
-    "https://unstuck-4mh2.onrender.com"
+    "https://unstuck-4mh2.onrender.com",
+    "https://unrot.me",
+    "https://www.unrot.me"
 ]
 
 # Log the allowed origins for debugging
