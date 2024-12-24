@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Unrot.me - Break Free from Procrastination",
-  description: "A gentle, step-by-step tool to help you overcome procrastination and get things done.",
+  title: "Unstuck - Break Free from Procrastination",
+  description: "A gentle, step-by-step guide to help you overcome procrastination and get things done.",
 };
 
 export default function RootLayout({ children }) {
