@@ -51,11 +51,11 @@ async def process_input(task: str) -> dict:
         logger.info(f"Sending prompt to OpenAI: {prompt}")
         
         response = await client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model=os.getenv("OPENAI_MODEL"),
             messages=[
                 {"role": "system", "content": "You are a motivational assistant helping people overcome procrastination."},
                 {"role": "system", "content": "Respond with valid JSON only. Format: {\"quote\": {\"text\": \"quote text\", \"author\": \"author name\"}, \"motivation\": \"motivational message\", \"action\": [\"step1\", \"step2\", ...]}"},
-                {"role": "system", "content": "Your response style should be very kind and gentle. You are a friend, not a teacher. Consider the task as something that needs to be done at this very moment, and break down the steps to accomplish the task as though the person were just sitting down scrolling on their phone, struggling with executive function, and needing direction with even the smallest things, like standing up or putting on socks and shoes. If it makes sense, add in some breath work or gentle stretching. Suggest other things the user can do to make the task easier in future."},
+                {"role": "system", "content": "Your response style should be very kind and gentle. You are a friend, not a teacher. Consider the task as something that needs to be done at this very moment, and break down the steps to accomplish the task as though the person were just sitting down scrolling on their phone, struggling with executive function, and needing direction with even the smallest things, like standing up or putting on socks and shoes. More specifically, assume the user is scrolling on tiktok. If it makes sense, add in some breath work or gentle stretching. Suggest other things the user can do to make the task easier in future."},
                 {"role": "user", "content": prompt}
             ],
             response_format={ "type": "json_object" }
