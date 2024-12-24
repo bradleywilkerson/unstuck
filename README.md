@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Unstuck
+
+A gentle, step-by-step guide to help you overcome procrastination and get things done. Built with Next.js, FastAPI, and OpenAI.
+
+## Features
+
+- Break down tasks into manageable steps
+- Get personalized motivation and guidance
+- Smooth, animated interface
+- Mobile-friendly design
+- Keyboard shortcuts for power users
+
+## Tech Stack
+
+- Frontend: Next.js, TailwindCSS
+- Backend: FastAPI, OpenAI API
+- Deployment: Vercel (frontend), Render (backend)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+
+- Python 3.8+
+- OpenAI API key
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/unstuck.git
+cd unstuck
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install frontend dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. Install backend dependencies:
+```bash
+cd server
+pip install -r requirements.txt
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Create environment files:
 
-## Learn More
+Frontend (.env.local):
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
 
-To learn more about Next.js, take a look at the following resources:
+Backend (server/.env):
+```
+OPENAI_API_KEY=your_api_key_here
+ALLOWED_ORIGINS=http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Run both frontend and backend in development mode:
+```bash
+npm run app
+```
 
-## Deploy on Vercel
+Or run them separately:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Frontend:
+```bash
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Backend:
+```bash
+npm run server
+```
+
+## Deployment
+
+### Frontend (Vercel)
+
+1. Push to GitHub
+2. Import to Vercel
+3. Add environment variables
+
+### Backend (Render)
+
+1. Connect to Render
+2. Add environment variables
+3. Deploy
+
+## License
+
+MIT
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
